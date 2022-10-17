@@ -14,6 +14,7 @@ public class Bill {
     public Bill() {
     }
 
+
     public Bill(int id_bill, List<Item> items, LocalDateTime date_bill, String detail, boolean status, User user) {
         this.id_bill = id_bill;
         this.items = items;

@@ -4,6 +4,7 @@ import com.codegym.model.Bill;
 import com.codegym.model.Item;
 import com.codegym.model.User;
 import com.codegym.service.DatabaseHandle;
+import com.codegym.service.item.ItemService;
 import com.codegym.service.user.UserService;
 
 import java.sql.ResultSet;
@@ -49,7 +50,23 @@ public class BillService implements IBillService {
     }
 
     @Override
-    public Bill findBillById(String id) {
+    public Bill findBillById(int id) {
+        Bill bill = null;
+        try{
+            ResultSet result = databaseHandle.getRecords("*", "bill", "");
+            while (result.next()) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime date = LocalDateTime.parse(result.getString("date_bill"), formatter);
+                String detail = result.getString("detail");
+                boolean status = Integer.valueOf(result.getString("status")) > 0;
+                int idUser = result.getInt("id");
+                User user = new UserService().findUserById(idUser);
+                List<Item> items = new ItemService().getListItemInBill(id);
+                return new Bill(id, items, date, detail, status, user);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 

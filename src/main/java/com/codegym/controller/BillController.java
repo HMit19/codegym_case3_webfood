@@ -6,13 +6,14 @@ import com.codegym.service.bill.BillService;
 import com.codegym.service.item.ItemService;
 import com.codegym.service.user.UserService;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @WebServlet(name = "Servlet6", value = "/bills")
 public class BillController extends HttpServlet {
@@ -40,6 +41,9 @@ public class BillController extends HttpServlet {
                 case "bill":
                     showBillOfUser(request, response);
                     break;
+                case "bill-details":
+                    showBillDetails(request, response);
+                    break;
                 default:
                     listBills(request, response);
                     break;
@@ -50,19 +54,29 @@ public class BillController extends HttpServlet {
 
     }
 
+    private void showBillDetails(HttpServletRequest request, HttpServletResponse response) {
+        int idBill = Integer.parseInt(request.getParameter("id"));
+        Bill bill = billService.findBillById(idBill);
+        List<Item> items = itemService.getListItemInBill(idBill);
+        long total = 0;
+        for (Item item : items) {
+            total += item.getQuantity() * item.getPrice();
+        }
+        bill.setTotal(total);
+        request.setAttribute("bill", bill);
+        request.setAttribute("items", items);
+        try {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/views/bill/bill-details.jsp");
+            dispatcher.forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void showBillOfUser(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
         List<Bill> listBill = billService.getListBillOfUserId(id);
-        for (Bill bill : listBill) {
-            bill.setItems(itemService.getListItemInBill(bill.getId_bill()));
-            System.out.println(bill);
-            List<Item> items = itemService.getListItemInBill(bill.getId_bill());
-            long total = 0;
-            for (Item item : items) {
-                total += item.getQuantity() * item.getPrice();
-            }
-            bill.setTotal(total);
-        }
+        setTotalOfBill(listBill);
         request.setAttribute("listBills", listBill);
         RequestDispatcher dispatcher = request.getRequestDispatcher("views/bill/list.jsp");
         try {
@@ -74,8 +88,7 @@ public class BillController extends HttpServlet {
         }
     }
 
-    private void listBills(HttpServletRequest request, HttpServletResponse response) {
-        List<Bill> listBill = billService.getListBill();
+    private void setTotalOfBill(List<Bill> listBill) {
         for (Bill bill : listBill) {
             bill.setItems(itemService.getListItemInBill(bill.getId_bill()));
             System.out.println(bill);
@@ -86,6 +99,11 @@ public class BillController extends HttpServlet {
             }
             bill.setTotal(total);
         }
+    }
+
+    private void listBills(HttpServletRequest request, HttpServletResponse response) {
+        List<Bill> listBill = billService.getListBill();
+        setTotalOfBill(listBill);
         request.setAttribute("listBills", listBill);
         RequestDispatcher dispatcher = request.getRequestDispatcher("views/bill/list.jsp");
         try {
