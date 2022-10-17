@@ -39,7 +39,12 @@ public class BillService implements IBillService {
     }
 
     @Override
-    public boolean removeBill(String id) {
+    public boolean removeBill(int id) {
+        try{
+            return databaseHandle.deleteRecord("bill", "id_bill = " + id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
@@ -47,7 +52,6 @@ public class BillService implements IBillService {
     public Bill findBillById(String id) {
         return null;
     }
-
 
 
     @Override
@@ -85,6 +89,28 @@ public class BillService implements IBillService {
             e.printStackTrace();
         }
         return id;
+    }
+
+    @Override
+    public List<Bill> getListBillOfUserId(int id) {
+        List<Bill> listBill = null;
+        try {
+            listBill = new ArrayList<>();
+            ResultSet result = databaseHandle.getRecords("*", "bill", "id = " + id);
+            while (result.next()) {
+                int idBill = result.getInt("id_bill");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime date = LocalDateTime.parse(result.getString("date_bill"), formatter);
+                String detail = result.getString("detail");
+                boolean status = Integer.valueOf(result.getString("status")) > 0;
+                User user = new UserService().findUserById(id);
+                List<Item> items = new ArrayList<>();
+                listBill.add(new Bill(idBill, items, date, detail, status, user));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listBill;
     }
 
     // test

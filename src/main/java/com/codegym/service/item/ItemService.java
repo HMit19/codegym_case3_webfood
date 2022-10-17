@@ -11,16 +11,18 @@ import java.util.List;
 
 public class ItemService implements IItemService {
     DatabaseHandle databaseHandler;
+
     public ItemService() {
         databaseHandler = new DatabaseHandle();
     }
+
     @Override
     public boolean addItem(Item item) {
         boolean check = false;
         try {
 //            INSERT INTO webfood.item (id_product, id_bill, quantity, note, price) VALUES (5, 2, 1, null, '111')
-           check = databaseHandler.addRecord("item", "id_product, id_bill, quantity, note, price",
-                   item.getId_product() + ", " + item.getId_bill() + ", " + item.getQuantity() + ", '" + item.getNote() + "', " + item.getPrice());
+            check = databaseHandler.addRecord("item", "id_product, id_bill, quantity, note, price",
+                    item.getId_product() + ", " + item.getId_bill() + ", " + item.getQuantity() + ", '" + item.getNote() + "', " + item.getPrice());
             System.out.println("Add item status: " + check);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -35,7 +37,11 @@ public class ItemService implements IItemService {
 
     @Override
     public boolean removeItem(int id) {
-        return false;
+        try {
+            return databaseHandler.deleteRecord("item", "id_bill = " + id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -46,10 +52,10 @@ public class ItemService implements IItemService {
     @Override
     public List<Item> getListItemInBill(int id) {
         List<Item> listItem = null;
-        try{
+        try {
             listItem = new ArrayList<>();
             ResultSet result = databaseHandler.getRecords("*", "item join product on item.id_product = product.id_product", "id_bill = " + id);
-            while(result.next()){
+            while (result.next()) {
 
                 int id_product = result.getInt("item.id_product");
                 int idBill = result.getInt("id_bill");

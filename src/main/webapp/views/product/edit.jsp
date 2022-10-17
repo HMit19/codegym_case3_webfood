@@ -19,13 +19,7 @@
     <link rel="stylesheet" href="../static/css/responsive.bootstrap4.min.css"/>
     <!-- Theme style -->
     <link rel="stylesheet" href="../static/css/adminlte.min.css"/>
-    <!-- Custom style -->
-    <%--    <style>--%>
-    <%--        .image-product{--%>
-    <%--            width: 100px;--%>
-    <%--            height: 100px;--%>
-    <%--        }--%>
-    <%--    </style>--%>
+    <!-- Custom style -->qq
 
 </head>
 <body class="hold-transition sidebar-mini">

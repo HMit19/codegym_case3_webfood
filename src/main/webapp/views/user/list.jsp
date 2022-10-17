@@ -174,7 +174,7 @@
                                                     <%--                                                    </c:if>--%>
                                                     <%--                                                </td>--%>
                                                 <td>${user.address}</td>
-                                                <td class="text-center"><a href="">
+                                                <td class="text-center"><a href="/bills?action=bill&id=${user.id}">
                                                     <i class="fas fa-list"></i>
                                                 </a></td>
                                                 </a></td>

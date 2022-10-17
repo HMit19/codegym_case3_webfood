@@ -169,8 +169,10 @@
                                             </td>
                                             <td class="text-center">${listBill.total}</td>
                                             <td>${listBill.detail}</td>
-                                            <td class="text-center">
-                                                <i class="fas fa-trash-alt"></i>
+                                            <td class="text-center" style="color: blue;">
+                                                <a href="/bills?action=delete&id=${listBill.id_bill}">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -222,4 +224,22 @@
     });
 </script>
 </body>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    const status = document.getElementById("status").value;
+    if (status == "success") {
+        swal(
+            'Success',
+            'Delete successfully',
+            'success'
+        )
+    }
+    if (status == "fail") {
+        swal(
+            'Success',
+            'Edit successfully',
+            'success'
+        )
+    }
+</script>
 </html>

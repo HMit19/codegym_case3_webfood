@@ -37,6 +37,9 @@ public class BillController extends HttpServlet {
                 case "delete":
                     deleteBill(request, response);
                     break;
+                case "bill":
+                    showBillOfUser(request, response);
+                    break;
                 default:
                     listBills(request, response);
                     break;
@@ -45,6 +48,30 @@ public class BillController extends HttpServlet {
             e.printStackTrace();
         }
 
+    }
+
+    private void showBillOfUser(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        List<Bill> listBill = billService.getListBillOfUserId(id);
+        for (Bill bill : listBill) {
+            bill.setItems(itemService.getListItemInBill(bill.getId_bill()));
+            System.out.println(bill);
+            List<Item> items = itemService.getListItemInBill(bill.getId_bill());
+            long total = 0;
+            for (Item item : items) {
+                total += item.getQuantity() * item.getPrice();
+            }
+            bill.setTotal(total);
+        }
+        request.setAttribute("listBills", listBill);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("views/bill/list.jsp");
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void listBills(HttpServletRequest request, HttpServletResponse response) {
@@ -70,7 +97,20 @@ public class BillController extends HttpServlet {
         }
     }
 
+    // co ban se xoa cac item co trong bill roi se xoa bill
     private void deleteBill(HttpServletRequest request, HttpServletResponse response) {
+        int idBill = Integer.parseInt(request.getParameter("id"));
+        RequestDispatcher dispatcher = request.getRequestDispatcher("bills?action=list");
+        try{
+            if (itemService.removeItem(idBill) && billService.removeBill(idBill)) {
+                request.setAttribute("status", "success");
+            } else {
+                request.setAttribute("status", "fail");
+            }
+            dispatcher.forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
