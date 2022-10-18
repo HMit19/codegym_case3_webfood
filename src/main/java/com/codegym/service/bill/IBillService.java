@@ -6,11 +6,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IBillService {
-    public boolean addBill(Bill bill);
-    public boolean updateBill(Bill bill);
-    public boolean removeBill(int id);
-    public Bill findBillById(int id);
-    public List<Bill> getListBill();
-    public int getId(LocalDateTime date);
-    public List<Bill> getListBillOfUserId(int id);
+	boolean addBill(Bill bill);
+
+	boolean updateBill(Bill bill);
+
+	boolean removeBill(int id);
+
+	Bill findBillById(int id);
+
+	List<Bill> getListBill();
+
+	int getId(LocalDateTime date);
+
+	List<Bill> getListBillOfUserId(int id);
 }

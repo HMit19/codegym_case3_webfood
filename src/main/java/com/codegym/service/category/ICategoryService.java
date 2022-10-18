@@ -6,15 +6,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface ICategoryService {
-    public boolean removeCategory(int id);
+	boolean removeCategory(int id);
 
-    public boolean updateCategory(Category category);
+    boolean updateCategory(Category category);
 
     boolean addCategory(Category category);
 
-    public Category findCategoryById(int id);
+    Category findCategoryById(int id);
 
-    public Category findCategoryByName(String name);
+    Category findCategoryByName(String name);
 
-    public List<Category> getListCategory() throws SQLException;
+    List<Category> getListCategory() throws SQLException;
 }

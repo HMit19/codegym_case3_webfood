@@ -25,10 +25,10 @@ public class ProductService implements IProductService {
                 long price = Long.parseLong(result.getString("price_product"));
                 String image = result.getString("image_product");
                 String description = result.getString("description");
-                boolean is_available = Integer.valueOf(result.getString("available")) > 0 ? true : false;
+                boolean is_available = Integer.valueOf(result.getString("available")) > 0;
                 int id_category = Integer.valueOf(result.getString("id_category"));
                 Product product = new Product(id, name, price, image, description, is_available, id_category);
-                System.out.println(product.toString());
+                System.out.println(product);
                 listProduct.add(product);
             }
         } catch (Exception e) {
@@ -48,10 +48,10 @@ public class ProductService implements IProductService {
                 long price = Long.parseLong(result.getString("price_product"));
                 String image = result.getString("image_product");
                 String description = result.getString("description");
-                boolean is_available = Integer.valueOf(result.getString("available")) > 0 ? true : false;
+                boolean is_available = Integer.valueOf(result.getString("available")) > 0;
                 int id_category = Integer.valueOf(result.getString("id_category"));
                 product = new Product(id_product, name, price, image, description, is_available, id_category);
-                System.out.println(product.toString());
+                System.out.println(product);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -72,7 +72,7 @@ public class ProductService implements IProductService {
                 String description = result.getString("description");
                 boolean is_available = Integer.parseInt(result.getString("available")) > 0;
                 Product product = new Product(id, name, price, image, description, is_available, id_category);
-                System.out.println(product.toString());
+                System.out.println(product);
                 listProduct.add(product);
             }
         } catch (Exception e) {

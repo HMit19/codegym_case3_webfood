@@ -6,24 +6,25 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface IUserService {
-    public boolean addUser(User user);
+	boolean addUser(User user);
 
-    public boolean removeUser(int id);
+	boolean removeUser(int id);
 
-    boolean updateUser(int id, String activate);
+	boolean updateUser(int id, String activate);
 
-    boolean setRoleUser(int id, String role);
+	boolean setRoleUser(int id, String role);
 
-    public boolean updateUser(User user);
+	boolean updateUser(User user);
 
-    public User findUserById(int id);
-    public User findUserByPhone(String phone);
+	User findUserById(int id);
 
-    public User findUserByName(String name);
+	User findUserByPhone(String phone);
 
-    public User findUserByEmail(String email);
+	User findUserByName(String name);
 
-    public List<User> getListUser(String columns, String condition) throws SQLException;
+	User findUserByEmail(String email);
 
-    public List<User> getListUser() throws SQLException;
+	List<User> getListUser(String columns, String condition) throws SQLException;
+
+	List<User> getListUser() throws SQLException;
 }
