@@ -122,56 +122,61 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title col-10" style="margin-left: 28px;">Categories</h3>
-                                <a href="categories?action=create" class="btn btn-primary">
-                                    <i class="fas fa-plus"></i>&ensp;Add Category
-                                </a>
+                                <h3 class="card-title">Bill Detail</h3>
                             </div>
                             <!-- /.card-header -->
-                            <input type="hidden" name="status" id="status" value="${status}">
                             <div class="card-body">
-                                <table
-                                        id="products"
-                                        class="table table-bordered table-striped"
-                                >
-                                    <thead>
+                                <h3 style="margin-bottom: 20px;">Order Detail</h3>
+                                <div style="margin-bottom:50px;">
+                                    <ul>
+                                        <li>ID Order: &nbsp;
+                                            <span>
+                                                ${bill.id_bill}
+                                            </span></li>
+                                        <li>Name Customer: &nbsp;
+                                            <span>
+                                                ${bill.user.name}
+                                            </span></li>
+                                        <li>Date: &nbsp;
+                                            <span>
+                                                ${
+                                                bill.date_bill
+                                                }
+                                            </span></li>
+                                        <li>Address: &nbsp;
+                                            <span>
+                                                ${bill.user.address}
+                                            </span></li>
+                                        <li>Note: &nbsp;
+                                            <c:if test="${bill.detail == null}">
+                                                <span></span>
+                                            </c:if>
+                                            <c:if test="${bill.detail != null}">
+                                                <span>${bill.detail}</span>
+                                            </c:if>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <table id="products" class="table table-bordered table-striped">
                                     <tr>
-                                    <tr>
-                                        <th class="col-1 text-center">ID Bill</th>
-                                        <th class="col-2 text-center">Name Customer</th>
-                                        <th class="col-2 text-center">Days Sales</th>
-                                        <th class="col-1 text-center">Bill Details</th>
-                                        <th class="col-1 text-center">Total</th>
-                                        <th class="col-3 text-center">Notes</th>
-                                        <th class="col-1 text-center">Delete</th>
+                                        <th>Name Product</th>
+                                        <th>Quantity</th>
                                     </tr>
-
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <c:forEach items="${listBills}" var="listBill">
+                                    <c:forEach items="${items}" var="item">
                                         <tr>
-                                            <td class="text-center">${listBill.id_bill}</td>
-                                            <td>${listBill.user.name}</td>
-                                            <td class="text-center">${listBill.date_bill}</td>
-                                            <td class="text-center">
-                                                <a href="/bills?action=bill-details&id=${listBill.id_bill}">
-                                                    <i class="fas fa-list"></i>
-                                                </a>
-                                            </td>
-                                            <td class="text-center">${listBill.total}</td>
-                                            <td>${listBill.detail}</td>
-                                            <td class="text-center" style="color: blue;">
-                                                <a href="/bills?action=delete&id=${listBill.id_bill}">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </a>
-                                            </td>
+                                            <td>${item.product.name_product}</td>
+                                            <td>${item.quantity}</td>
                                         </tr>
                                     </c:forEach>
-                                    </tbody>
-                                    <tfoot>
-                                    </tfoot>
                                 </table>
+
+                                <h3 style="margin: 50px 0px 20px 0px;">Pay</h3>
+                                <div>
+                                    <h4>Total:
+                                        <span>${bill.total}</span>&nbsp; VND
+                                    </h4>
+                                </div>
+
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -216,22 +221,4 @@
     });
 </script>
 </body>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script>
-    const status = document.getElementById("status").value;
-    if (status == "success") {
-        swal(
-            'Success',
-            'Delete successfully',
-            'success'
-        )
-    }
-    if (status == "fail") {
-        swal(
-            'Success',
-            'Edit successfully',
-            'success'
-        )
-    }
-</script>
 </html>

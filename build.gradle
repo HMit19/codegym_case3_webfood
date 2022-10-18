@@ -14,11 +14,13 @@ ext {
     junitVersion = '5.8.2'
 }
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
+sourceCompatibility = '11'
+targetCompatibility = '11'
 
 tasks.withType(JavaCompile) {
+    options.warnings = true
     options.encoding = 'UTF-8'
+    options.compilerArgs += '-Xlint'
 }
 
 dependencies {
