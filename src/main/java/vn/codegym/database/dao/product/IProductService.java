@@ -1,0 +1,21 @@
+package vn.codegym.database.dao.product;
+
+import vn.codegym.database.model.Product;
+
+import java.util.List;
+
+public interface IProductService {
+	List<Product> getListFood();
+
+	Product findFoodById(int id);
+
+	List<Product> getListFoodByCategory(int id_category);
+
+	Product findFoodByName(String name);
+
+	boolean removeFood(int id);
+
+	boolean updateProduct(Product product);
+
+	boolean addProduct(Product product);
+}
