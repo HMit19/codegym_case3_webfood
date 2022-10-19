@@ -2,7 +2,7 @@
 
 package com.codegym.service;
 
-import com.codegym.connect.ConnectToMySQL;
+import com.codegym.connect.DatabaseManagement;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,12 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DatabaseHandle implements IDatabaseHandle {
-	ConnectToMySQL connection = null;
 	Connection connect = null;
 
 	public DatabaseHandle() {
-		connection = new ConnectToMySQL();
-		connect = ConnectToMySQL.getConnection();
+		connect = DatabaseManagement.createConnection();
 	}
 
 	// update record
