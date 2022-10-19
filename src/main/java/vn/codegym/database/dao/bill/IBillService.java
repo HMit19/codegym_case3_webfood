@@ -1,6 +1,6 @@
-package vn.codegym.service.bill;
+package vn.codegym.database.dao.bill;
 
-import vn.codegym.model.Bill;
+import vn.codegym.database.model.Bill;
 
 import java.time.LocalDateTime;
 import java.util.List;

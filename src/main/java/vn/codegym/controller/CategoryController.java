@@ -1,8 +1,8 @@
 package vn.codegym.controller;
 
-import vn.codegym.model.Category;
-import vn.codegym.model.User;
-import vn.codegym.service.category.CategoryService;
+import vn.codegym.database.dao.category.CategoryService;
+import vn.codegym.database.model.Category;
+import vn.codegym.database.model.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

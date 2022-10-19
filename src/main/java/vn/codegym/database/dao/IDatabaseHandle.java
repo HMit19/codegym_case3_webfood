@@ -1,4 +1,4 @@
-package vn.codegym.service;
+package vn.codegym.database.dao;
 
 import java.sql.ResultSet;
 

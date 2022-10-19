@@ -1,8 +1,8 @@
-package vn.codegym.service.user;
+package vn.codegym.database.dao.user;
 
-import vn.codegym.model.Bill;
-import vn.codegym.model.User;
-import vn.codegym.service.DatabaseHandle;
+import vn.codegym.database.dao.DatabaseHandle;
+import vn.codegym.database.model.Bill;
+import vn.codegym.database.model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

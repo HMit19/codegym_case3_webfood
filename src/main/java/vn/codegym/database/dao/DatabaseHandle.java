@@ -1,8 +1,8 @@
 // tạo lớp sử lý các thao tác với database
 
-package vn.codegym.service;
+package vn.codegym.database.dao;
 
-import vn.codegym.connect.DatabaseManagement;
+import vn.codegym.database.DatabaseManagement;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

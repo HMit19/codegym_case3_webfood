@@ -1,8 +1,8 @@
 package vn.codegym.controller;
 
-import vn.codegym.model.Item;
-import vn.codegym.model.User;
-import vn.codegym.service.user.UserService;
+import vn.codegym.database.dao.user.UserService;
+import vn.codegym.database.model.Item;
+import vn.codegym.database.model.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

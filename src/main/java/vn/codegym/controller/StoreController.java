@@ -1,12 +1,12 @@
 package vn.codegym.controller;
 
-import vn.codegym.model.Bill;
-import vn.codegym.model.Item;
-import vn.codegym.model.Product;
-import vn.codegym.model.User;
-import vn.codegym.service.bill.BillService;
-import vn.codegym.service.item.ItemService;
-import vn.codegym.service.product.ProductService;
+import vn.codegym.database.dao.bill.BillService;
+import vn.codegym.database.dao.item.ItemService;
+import vn.codegym.database.dao.product.ProductService;
+import vn.codegym.database.model.Bill;
+import vn.codegym.database.model.Item;
+import vn.codegym.database.model.Product;
+import vn.codegym.database.model.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

@@ -1,4 +1,4 @@
-package vn.codegym.connect;
+package vn.codegym.database;
 
 import org.jetbrains.annotations.NotNull;
 

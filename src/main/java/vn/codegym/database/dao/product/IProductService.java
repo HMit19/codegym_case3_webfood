@@ -1,6 +1,6 @@
-package vn.codegym.service.product;
+package vn.codegym.database.dao.product;
 
-import vn.codegym.model.Product;
+import vn.codegym.database.model.Product;
 
 import java.util.List;
 

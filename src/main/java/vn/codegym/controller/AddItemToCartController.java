@@ -1,9 +1,9 @@
 package vn.codegym.controller;
 
-import vn.codegym.model.Item;
-import vn.codegym.model.Product;
-import vn.codegym.model.User;
-import vn.codegym.service.product.ProductService;
+import vn.codegym.database.dao.product.ProductService;
+import vn.codegym.database.model.Item;
+import vn.codegym.database.model.Product;
+import vn.codegym.database.model.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

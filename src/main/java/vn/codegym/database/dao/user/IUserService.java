@@ -1,6 +1,6 @@
-package vn.codegym.service.user;
+package vn.codegym.database.dao.user;
 
-import vn.codegym.model.User;
+import vn.codegym.database.model.User;
 
 import java.sql.SQLException;
 import java.util.List;

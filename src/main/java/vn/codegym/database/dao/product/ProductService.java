@@ -1,7 +1,7 @@
-package vn.codegym.service.product;
+package vn.codegym.database.dao.product;
 
-import vn.codegym.model.Product;
-import vn.codegym.service.DatabaseHandle;
+import vn.codegym.database.dao.DatabaseHandle;
+import vn.codegym.database.model.Product;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;

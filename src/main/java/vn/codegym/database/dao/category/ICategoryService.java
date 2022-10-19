@@ -1,6 +1,6 @@
-package vn.codegym.service.category;
+package vn.codegym.database.dao.category;
 
-import vn.codegym.model.Category;
+import vn.codegym.database.model.Category;
 
 import java.sql.SQLException;
 import java.util.List;

@@ -1,8 +1,8 @@
-package vn.codegym.service.item;
+package vn.codegym.database.dao.item;
 
-import vn.codegym.model.Item;
-import vn.codegym.model.Product;
-import vn.codegym.service.DatabaseHandle;
+import vn.codegym.database.dao.DatabaseHandle;
+import vn.codegym.database.model.Item;
+import vn.codegym.database.model.Product;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -1,4 +1,4 @@
-package vn.codegym.model;
+package vn.codegym.database.model;
 
 import java.util.List;
 

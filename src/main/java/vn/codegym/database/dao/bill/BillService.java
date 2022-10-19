@@ -1,11 +1,11 @@
-package vn.codegym.service.bill;
+package vn.codegym.database.dao.bill;
 
-import vn.codegym.model.Bill;
-import vn.codegym.model.Item;
-import vn.codegym.model.User;
-import vn.codegym.service.DatabaseHandle;
-import vn.codegym.service.item.ItemService;
-import vn.codegym.service.user.UserService;
+import vn.codegym.database.dao.DatabaseHandle;
+import vn.codegym.database.dao.item.ItemService;
+import vn.codegym.database.dao.user.UserService;
+import vn.codegym.database.model.Bill;
+import vn.codegym.database.model.Item;
+import vn.codegym.database.model.User;
 
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
