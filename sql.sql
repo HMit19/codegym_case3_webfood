@@ -10,8 +10,8 @@ CREATE TABLE `users`
     `password` VARCHAR(100) NOT NULL,
     `phone`    VARCHAR(20)  NOT NULL,
     `address`  VARCHAR(150) NOT NULL,
-    `role`     BIT DEFAULT 0, -- mặc định khi tài khoản mới được khởi tạo sẽ có quyền user
-    `activate` BIT DEFAULT 1, -- mặc định khi tạo ra tài khoản sẽ ở trạng thái đang hoạt động
+    `role`     BOOLEAN DEFAULT FALSE, -- mặc định khi tài khoản mới được khởi tạo sẽ có quyền user
+    `activate` BOOLEAN DEFAULT TRUE, -- mặc định khi tạo ra tài khoản sẽ ở trạng thái đang hoạt động
     PRIMARY KEY (`id`)
 );
 
@@ -19,7 +19,7 @@ CREATE TABLE `categories`
 (
     `id_category`   INT          NOT NULL AUTO_INCREMENT,
     `name_category` VARCHAR(150) NOT NULL UNIQUE,
-    `exist`         BIT DEFAULT 1, -- mặc định trạng thái của một doanh mục là tồn tại
+    `exist`         BOOLEAN DEFAULT TRUE, -- mặc định trạng thái của một doanh mục là tồn tại
     PRIMARY KEY (`id_category`)
 );
 
@@ -30,7 +30,7 @@ CREATE TABLE `products`
     `price_product` LONG         NOT NULL,
     `image_product` VARCHAR(350),
     `description`   LONGTEXT,
-    `available`     BIT DEFAULT 1, -- mặc định các sản phẩm tạo mới đều có sẵn
+    `available`     BOOLEAN DEFAULT TRUE, -- mặc định các sản phẩm tạo mới đều có sẵn
     `id_category`   INT          NOT NULL,
     PRIMARY KEY (`id_product`),
     FOREIGN KEY (`id_category`) REFERENCES `categories` (`id_category`)
@@ -41,7 +41,7 @@ CREATE TABLE `bills`
     `id_bill`   INT NOT NULL AUTO_INCREMENT,
     `date_bill` DATETIME DEFAULT now(),
     `detail`    LONGTEXT,
-    `status`    BIT      DEFAULT 1, -- mặc định các hoá đơn được lưu đang tồn tại chưa bị ẩn đi
+    `status`    BOOLEAN DEFAULT TRUE, -- mặc định các hoá đơn được lưu đang tồn tại chưa bị ẩn đi
     `id`        INT NOT NULL,
     PRIMARY KEY (`id_bill`),
     FOREIGN KEY (`id`) REFERENCES `users` (`id`)
