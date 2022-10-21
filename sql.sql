@@ -45,6 +45,14 @@ CREATE TABLE `bills`
     `id`        INT NOT NULL,
     PRIMARY KEY (`id_bill`),
     FOREIGN KEY (`id`) REFERENCES `users` (`id`)
+--    `id`        INT NOT NULL AUTO_INCREMENT,
+--    `userId`    INT NOT NULL,
+--    `details`   LONGTEXT,
+--    `onGoing`   BOOLEAN DEFAULT TRUE, -- mặc định các hoá đơn được lưu đang tồn tại chưa bị ẩn đi
+--    `createdAt` TIMESTAMP NOT NULL DEFAULT now(),
+--    `updatedAt` TIMESTAMP NOT NULL DEFAULT now(),
+--    PRIMARY KEY (`id`),
+--    FOREIGN KEY (`userId`) REFERENCES `users` (`id`)
 );
 
 CREATE TABLE `coupons`
