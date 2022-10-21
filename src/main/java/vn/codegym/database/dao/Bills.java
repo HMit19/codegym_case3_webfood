@@ -25,12 +25,12 @@ public final class Bills {
 		try (
 				final Connection connection = DatabaseManagement.createConnection();
 				final PreparedStatement statement = connection.prepareStatement(
-						"INSERT INTO `bills` (`userId`, `details`) VALUES (?, ?)"
+						"INSERT INTO `bills` (`userId`, `notes`) VALUES (?, ?)"
 				)
 		) {
 			// get data from POJO and check null
 			final Integer userId = bill.getUserId();
-			final String detail = bill.getDetail();
+			final String detail = bill.getNotes();
 			if (userId == null) {
 				LOGGER.error("Cannot add this Bill2: required value is null!");
 				return false;
@@ -46,7 +46,7 @@ public final class Bills {
 			// update generated values
 			try (final ResultSet resultSet = statement.getGeneratedKeys()) {
 				bill.setId(resultSet.getInt("id"));
-				bill.setOnGoing(resultSet.getBoolean("onGoing"));
+				bill.setIsActive(resultSet.getBoolean("isActive"));
 				bill.setCreatedAt(resultSet.getTimestamp("createdAt"));
 				bill.setUpdatedAt(resultSet.getTimestamp("updatedAt"));
 			}
@@ -61,18 +61,18 @@ public final class Bills {
 		try (
 				final Connection connection = DatabaseManagement.createConnection();
 				final PreparedStatement statement = connection.prepareStatement(
-						"UPDATE `bills` SET `onGoing` = ?, `updatedAt` = DEFAULT WHERE `id` = ?"
+						"UPDATE `bills` SET `isActive` = ?, `updatedAt` = DEFAULT WHERE `id` = ?"
 				)
 		) {
 			// get data from POJO and check null
 			final Integer id = bill.getId();
-			final Boolean onGoing = bill.getOnGoing();
-			if (id == null || onGoing == null) {
+			final Boolean isActive = bill.getIsActive();
+			if (id == null || isActive == null) {
 				LOGGER.error("Cannot update this Bill2: required value is null!");
 				return false;
 			}
 			// set values for statement
-			statement.setBoolean(1, onGoing);
+			statement.setBoolean(1, isActive);
 			statement.setInt(2, id);
 			LOGGER.info("Executing SQL statement: " + statement);
 			if (statement.executeUpdate() != 1) {
@@ -94,7 +94,7 @@ public final class Bills {
 		try (
 				final Connection connection = DatabaseManagement.createConnection();
 				final PreparedStatement statement = connection.prepareStatement(
-						"SELECT `id`, `userId`, `details`, `onGoing`, `createdAt`, `updatedAt` FROM `bills` WHERE `id` = ?"
+						"SELECT `id`, `userId`, `notes`, `isActive`, `createdAt`, `updatedAt` FROM `bills` WHERE `id` = ?"
 				)
 		) {
 			// set values for statement
@@ -107,8 +107,8 @@ public final class Bills {
 				final Bill2 bill = new Bill2();
 				bill.setId(resultSet.getInt("id"));
 				bill.setUserId(resultSet.getInt("userId"));
-				bill.setDetail(resultSet.getString("details"));
-				bill.setOnGoing(resultSet.getBoolean("onGoing"));
+				bill.setNotes(resultSet.getString("notes"));
+				bill.setIsActive(resultSet.getBoolean("isActive"));
 				bill.setCreatedAt(resultSet.getTimestamp("createdAt"));
 				bill.setUpdatedAt(resultSet.getTimestamp("updatedAt"));
 				return bill;
@@ -125,8 +125,8 @@ public final class Bills {
 			final Bill2 bill = new Bill2();
 			bill.setId(resultSet.getInt("id"));
 			bill.setUserId(resultSet.getInt("userId"));
-			bill.setDetail(resultSet.getString("details"));
-			bill.setOnGoing(resultSet.getBoolean("onGoing"));
+			bill.setNotes(resultSet.getString("notes"));
+			bill.setIsActive(resultSet.getBoolean("isActive"));
 			bill.setCreatedAt(resultSet.getTimestamp("createdAt"));
 			bill.setUpdatedAt(resultSet.getTimestamp("updatedAt"));
 			bills.add(bill);
@@ -142,7 +142,7 @@ public final class Bills {
 		try (
 				final Connection connection = DatabaseManagement.createConnection();
 				final PreparedStatement statement = connection.prepareStatement(
-						"SELECT `id`, `userId`, `details`, `onGoing`, `createdAt`, `updatedAt` FROM `bills` WHERE `userId` = ? LIMIT ?"
+						"SELECT `id`, `userId`, `notes`, `isActive`, `createdAt`, `updatedAt` FROM `bills` WHERE `userId` = ? LIMIT ?"
 				)
 		) {
 			// set values for statement
@@ -167,7 +167,7 @@ public final class Bills {
 		try (
 				final Connection connection = DatabaseManagement.createConnection();
 				final PreparedStatement statement = connection.prepareStatement(
-						"SELECT `id`, `userId`, `details`, `onGoing`, `createdAt`, `updatedAt` FROM `bills` LIMIT ?"
+						"SELECT `id`, `userId`, `notes`, `isActive`, `createdAt`, `updatedAt` FROM `bills` LIMIT ?"
 				)
 		) {
 			// set values for statement

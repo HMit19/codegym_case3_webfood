@@ -1,60 +1,62 @@
 package vn.codegym.database.model;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.sql.Timestamp;
 
 public final class Bill2 {
-	private Integer id;
-	private Integer userId;
-	private String detail;
-	private Boolean onGoing;
-	private Timestamp createdAt;
-	private Timestamp updatedAt;
+	private @Nullable Integer id;
+	private @Nullable Integer userId;
+	private @Nullable String notes;
+	private @Nullable Boolean isActive;
+	private @Nullable Timestamp createdAt;
+	private @Nullable Timestamp updatedAt;
 
-	public Integer getId() {
+	public @Nullable Integer getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(@Nullable Integer id) {
 		this.id = id;
 	}
 
-	public Integer getUserId() {
+	public @Nullable Integer getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(@Nullable Integer userId) {
 		this.userId = userId;
 	}
 
-	public String getDetail() {
-		return detail;
+	public @Nullable String getNotes() {
+		return notes;
 	}
 
-	public void setDetail(String detail) {
-		this.detail = detail;
+	public void setNotes(@Nullable String notes) {
+		this.notes = notes;
 	}
 
-	public Boolean getOnGoing() {
-		return onGoing;
+	public @Nullable Boolean getIsActive() {
+		return isActive;
 	}
 
-	public void setOnGoing(Boolean onGoing) {
-		this.onGoing = onGoing;
+	public void setIsActive(@Nullable Boolean isActive) {
+		this.isActive = isActive;
 	}
 
-	public Timestamp getCreatedAt() {
+	public @Nullable Timestamp getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Timestamp createdAt) {
+	public void setCreatedAt(@Nullable Timestamp createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public Timestamp getUpdatedAt() {
+	public @Nullable Timestamp getUpdatedAt() {
 		return updatedAt;
 	}
 
-	public void setUpdatedAt(Timestamp updatedAt) {
+	public void setUpdatedAt(@Nullable Timestamp updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 }
