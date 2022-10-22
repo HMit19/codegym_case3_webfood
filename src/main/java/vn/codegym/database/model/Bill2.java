@@ -36,11 +36,11 @@ public final class Bill2 {
 		this.notes = notes;
 	}
 
-	public @Nullable Boolean getIsActive() {
+	public @Nullable Boolean getActive() {
 		return isActive;
 	}
 
-	public void setIsActive(@Nullable Boolean isActive) {
+	public void setActive(@Nullable Boolean isActive) {
 		this.isActive = isActive;
 	}
 

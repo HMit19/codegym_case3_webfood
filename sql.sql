@@ -49,7 +49,7 @@ CREATE TABLE `bills`
 (
     `id`        INT       NOT NULL AUTO_INCREMENT,
     `userId`    INT       NOT NULL,
-    `notes`     LONGTEXT,
+    `notes`     TEXT,
     `isActive`  BOOLEAN   NOT NULL DEFAULT TRUE, -- mặc định các hoá đơn được lưu đang tồn tại chưa bị ẩn đi
     `createdAt` TIMESTAMP NOT NULL DEFAULT now(),
     `updatedAt` TIMESTAMP NOT NULL DEFAULT now(),
