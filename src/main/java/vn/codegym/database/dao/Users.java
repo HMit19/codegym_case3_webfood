@@ -26,6 +26,7 @@ public final class Users {
 	private Users() {
 	}
 
+
 	public static byte @NotNull [] hashPassword(@NotNull String password) {
 		try {
 			final MessageDigest digest = MessageDigest.getInstance("SHA3-256");
@@ -89,6 +90,7 @@ public final class Users {
 			// update generated values
 			try (final ResultSet resultSet = statement.getGeneratedKeys()) {
 				user.setId(resultSet.getInt("id"));
+				user.setActive(resultSet.getBoolean("isActive"));
 				user.setCreatedAt(resultSet.getTimestamp("createdAt"));
 				user.setUpdatedAt(resultSet.getTimestamp("updatedAt"));
 			}

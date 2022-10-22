@@ -17,8 +17,10 @@ import java.util.List;
 public final class Bills {
 	private static final @NotNull Logger LOGGER = LoggerFactory.getLogger(Bills.class);
 
+	
 	private Bills() {
 	}
+
 
 	public static boolean add(@NotNull Bill2 bill) {
 		try (
