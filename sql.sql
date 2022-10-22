@@ -1,20 +1,19 @@
-CREATE DATABASE `web_food` CHARACTER SET "utf8mb4" COLLATION "utf8mb4_bin";
+CREATE DATABASE `web_food` CHARACTER SET 'utf8mb4' COLLATION 'utf8mb4_bin';
 
 USE `web_food`;
 
 CREATE TABLE `users`
 (
-    `id`        INT       NOT NULL AUTO_INCREMENT,
-    `email`     TINYTEXT  NOT NULL UNIQUE,
-    `password`  TINYBLOB  NOT NULL,
-    `salt`      TINYBLOB  NOT NULL,
-    `name`      TINYTEXT  NOT NULL,
-    `phone`     TINYTEXT  NOT NULL,
-    `address`   TEXT      NOT NULL,
-    `isAdmin`   BOOLEAN   NOT NULL,
-    `isActive`  BOOLEAN   NOT NULL DEFAULT TRUE, -- mặc định khi tạo ra tài khoản sẽ ở trạng thái đang hoạt động
-    `createdAt` TIMESTAMP NOT NULL DEFAULT now(),
-    `updatedAt` TIMESTAMP NOT NULL DEFAULT now(),
+    `id`        INT        NOT NULL AUTO_INCREMENT,
+    `email`     TINYTEXT   NOT NULL UNIQUE,
+    `password`  BINARY(64) NOT NULL,
+    `name`      TINYTEXT   NOT NULL,
+    `phone`     TINYTEXT   NOT NULL,
+    `address`   TEXT       NOT NULL,
+    `isAdmin`   BOOLEAN    NOT NULL,
+    `isActive`  BOOLEAN    NOT NULL DEFAULT TRUE, -- mặc định khi tạo ra tài khoản sẽ ở trạng thái đang hoạt động
+    `createdAt` TIMESTAMP  NOT NULL DEFAULT now(),
+    `updatedAt` TIMESTAMP  NOT NULL DEFAULT now(),
     PRIMARY KEY (`id`)
 );
 
@@ -22,8 +21,8 @@ CREATE TABLE `categories`
 (
     `id`          INT       NOT NULL AUTO_INCREMENT,
     `name`        TINYTEXT  NOT NULL,
-    `description` TEXT      NOT NULL,
-    `isActive`    BOOLEAN   NOT NULL DEFAULT TRUE, -- mặc định trạng thái của một doanh mục là tồn tại
+    `description` TEXT,
+    `isAvailable` BOOLEAN   NOT NULL DEFAULT TRUE, -- mặc định trạng thái của một doanh mục là tồn tại
     `createdAt`   TIMESTAMP NOT NULL DEFAULT now(),
     `updatedAt`   TIMESTAMP NOT NULL DEFAULT now(),
     PRIMARY KEY (`id`)
@@ -72,7 +71,7 @@ CREATE TABLE `items`
     `billId`     INT       NOT NULL,
     `productId`  INT       NOT NULL,
     `quantity`   INT       NOT NULL,
-    `notes`      LONGTEXT,
+    `notes`      TEXT,
     `price`      INT       NOT NULL, -- price của mỗi item là giá hiện tại của sản phẩm, trừ trường hợp giá của sản phẩm bị thay đổi mà cần truy vết hoá đơn
     `createdAt`  TIMESTAMP NOT NULL DEFAULT now(),
     `updatedAt`  TIMESTAMP NOT NULL DEFAULT now(),
@@ -81,17 +80,27 @@ CREATE TABLE `items`
     FOREIGN KEY (`productId`) REFERENCES `products` (`id`)
 );
 
-
+SET @randomBytes = RANDOM_BYTES(32);
 INSERT INTO `web_food`.`users` (`email`, `password`, `salt`, `name`, `phone`, `address`, `isAdmin`)
-VALUES ('admin@gmail.com', SHA2('admin', 256), x'', 'admin', '0705973063', 'nguyen hoang, my dinh', TRUE);
+VALUES ('admin@gmail.com',
+		CONCAT(SHA2(CONCAT(@randomBytes, 'admin'), 256), @randomBytes), @randomBytes,
+		'admin', '0705973063', 'nguyen hoang, my dinh', TRUE);
 INSERT INTO `web_food`.`users` (`email`, `password`, `salt`, `name`, `phone`, `address`, `isAdmin`)
-VALUES ('maivanhieu@gmail.com', SHA2('123', 256), x'', 'mai van hieu', '0705973063', 'nguyen hoang, my dinh', FALSE);
+VALUES ('maivanhieu@gmail.com',
+		SHA2(CONCAT(@randomBytes, '123', @randomBytes), 256), @randomBytes,
+		'mai van hieu', '0705973063', 'nguyen hoang, my dinh', FALSE);
 INSERT INTO `web_food`.`users` (`email`, `password`, `salt`, `name`, `phone`, `address`, `isAdmin`)
-VALUES ('trinh@gmail.com', SHA2('123', 256), x'', 'chu thi thuc trinh', '0705973063', 'nguyen hoang, my dinh', FALSE);
+VALUES ('trinh@gmail.com',
+		SHA2(CONCAT(@randomBytes, '123', @randomBytes), 256), @randomBytes,
+		'chu thi thuc trinh', '0705973063', 'nguyen hoang, my dinh', FALSE);
 INSERT INTO `web_food`.`users` (`email`, `password`, `salt`, `name`, `phone`, `address`, `isAdmin`)
-VALUES ('anh@gmail.com', SHA2('123', 256), x'', 'chu thi thuc anh', '0705973063', 'nguyen hoang, my dinh', FALSE);
+VALUES ('anh@gmail.com',
+		SHA2(CONCAT(@randomBytes, '123', @randomBytes), 256), @randomBytes,
+		'chu thi thuc anh', '0705973063', 'nguyen hoang, my dinh', FALSE);
 INSERT INTO `web_food`.`users` (`email`, `password`, `salt`, `name`, `phone`, `address`, `isAdmin`)
-VALUES ('ha@gmail.com', SHA2('123', 256), x'', 'mai van ha', '0705973063', 'nguyen hoang, my dinh', FALSE);
+VALUES ('ha@gmail.com',
+		SHA2(CONCAT(@randomBytes, '123', @randomBytes), 256), @randomBytes,
+		'mai van ha', '0705973063', 'nguyen hoang, my dinh', FALSE);
 
 
 INSERT INTO `web_food`.`categories` (`name`) VALUES ('Rice');
