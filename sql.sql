@@ -23,6 +23,7 @@ CREATE TABLE `categories`
     `name`        TINYTEXT  NOT NULL,
     `description` TEXT,
     `isAvailable` BOOLEAN   NOT NULL DEFAULT TRUE, -- mặc định trạng thái của một doanh mục là tồn tại
+    `isHidden`    BOOLEAN   NOT NULL DEFAULT FALSE, -- mặc định trạng thái của một doanh mục là hiển thị
     `createdAt`   TIMESTAMP NOT NULL DEFAULT now(),
     `updatedAt`   TIMESTAMP NOT NULL DEFAULT now(),
     PRIMARY KEY (`id`)

@@ -9,6 +9,7 @@ public final class Category2 {
 	private @Nullable String name;
 	private @Nullable String description;
 	private @Nullable Boolean isAvailable;
+	private @Nullable Boolean isHidden;
 	private @Nullable Timestamp createdAt;
 	private @Nullable Timestamp updatedAt;
 
@@ -43,6 +44,14 @@ public final class Category2 {
 
 	public void setAvailable(@Nullable Boolean available) {
 		isAvailable = available;
+	}
+
+	public @Nullable Boolean getHidden() {
+		return isHidden;
+	}
+
+	public void setHidden(@Nullable Boolean hidden) {
+		isHidden = hidden;
 	}
 
 	public @Nullable Timestamp getCreatedAt() {

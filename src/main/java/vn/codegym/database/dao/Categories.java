@@ -48,6 +48,7 @@ public final class Categories {
 			try (final ResultSet resultSet = statement.getGeneratedKeys()) {
 				category.setId(resultSet.getInt("id"));
 				category.setAvailable(resultSet.getBoolean("isAvailable"));
+				category.setHidden(resultSet.getBoolean("isHidden"));
 				category.setCreatedAt(resultSet.getTimestamp("createdAt"));
 				category.setUpdatedAt(resultSet.getTimestamp("updatedAt"));
 			}
@@ -62,7 +63,7 @@ public final class Categories {
 		try (
 				final Connection connection = DatabaseManagement.createConnection();
 				final PreparedStatement statement = connection.prepareStatement(
-						"UPDATE 'categories' SET `name` = ?, `description` = ?, `isAvailable` = ?, "
+						"UPDATE 'categories' SET `name` = ?, `description` = ?, `isAvailable` = ?, `isHidden` = ?"
 								+ "`updatedAt` = DEFAULT WHERE `id` = ?"
 				)
 		) {
@@ -71,7 +72,8 @@ public final class Categories {
 			final String name = category.getName();
 			final String description = category.getDescription();
 			final Boolean isAvailable = category.getAvailable();
-			if (id == null || name == null || description == null || isAvailable == null) {
+			final Boolean isHidden = category.getHidden();
+			if (id == null || name == null || isAvailable == null || isHidden == null) {
 				LOGGER.error("Cannot add this Category: required value is null!");
 				return false;
 			}
@@ -79,7 +81,8 @@ public final class Categories {
 			statement.setString(1, name);
 			statement.setString(2, description);
 			statement.setBoolean(3, isAvailable);
-			statement.setInt(4, id);
+			statement.setBoolean(4, isHidden);
+			statement.setInt(5, id);
 			LOGGER.info("Executing SQL statement: " + statement);
 			if (statement.executeUpdate() != 1) {
 				LOGGER.error("Cannot update this Category: nothing was updated!");
@@ -100,7 +103,7 @@ public final class Categories {
 		try (
 				final Connection connection = DatabaseManagement.createConnection();
 				final PreparedStatement statement = connection.prepareStatement(
-						"SELECT `id`, `name`, `description`, `isAvailable`, `createdAt`, `updatedAt`"
+						"SELECT `id`, `name`, `description`, `isAvailable`, `isHidden`, `createdAt`, `updatedAt`"
 								+ " FROM 'categories' WHERE `id` = ?"
 				)
 		) {
@@ -119,6 +122,56 @@ public final class Categories {
 		}
 	}
 
+	public static @NotNull List<@NotNull Category2> getAvailable() {
+		return getAvailable(DatabaseManagement.DEFAULT_LIMIT);
+	}
+
+	public static @NotNull List<@NotNull Category2> getAvailable(int limit) {
+		try (
+				final Connection connection = DatabaseManagement.createConnection();
+				final PreparedStatement statement = connection.prepareStatement(
+						"SELECT `id`, `name`, `description`, `isAvailable`, `isHidden`, `createdAt`, `updatedAt`"
+								+ " FROM 'categories' WHERE `isAvailable` = TRUE AND `isHidden` = FALSE LIMIT ?"
+				)
+		) {
+			// set values for statement
+			statement.setInt(1, limit);
+			LOGGER.info("Executing SQL statement: " + statement);
+			try (final ResultSet resultSet = statement.executeQuery()) {
+				// create return values
+				return createMany(resultSet);
+			}
+		} catch (final SQLException exception) {
+			LOGGER.error("Cannot get Category list: Exception on execute!", exception);
+			return List.of();
+		}
+	}
+
+	public static @NotNull List<@NotNull Category2> getVisible() {
+		return getVisible(DatabaseManagement.DEFAULT_LIMIT);
+	}
+
+	public static @NotNull List<@NotNull Category2> getVisible(int limit) {
+		try (
+				final Connection connection = DatabaseManagement.createConnection();
+				final PreparedStatement statement = connection.prepareStatement(
+						"SELECT `id`, `name`, `description`, `isAvailable`, `isHidden`, `createdAt`, `updatedAt`"
+								+ " FROM 'categories' WHERE `isHidden` = FALSE LIMIT ?"
+				)
+		) {
+			// set values for statement
+			statement.setInt(1, limit);
+			LOGGER.info("Executing SQL statement: " + statement);
+			try (final ResultSet resultSet = statement.executeQuery()) {
+				// create return values
+				return createMany(resultSet);
+			}
+		} catch (final SQLException exception) {
+			LOGGER.error("Cannot get Category list: Exception on execute!", exception);
+			return List.of();
+		}
+	}
+
 	public static @NotNull List<@NotNull Category2> getAll() {
 		return getAll(DatabaseManagement.DEFAULT_LIMIT);
 	}
@@ -127,7 +180,7 @@ public final class Categories {
 		try (
 				final Connection connection = DatabaseManagement.createConnection();
 				final PreparedStatement statement = connection.prepareStatement(
-						"SELECT `id`, `name`, `description`, `isAvailable`, `createdAt`, `updatedAt`"
+						"SELECT `id`, `name`, `description`, `isAvailable`, `isHidden`, `createdAt`, `updatedAt`"
 								+ " FROM 'categories' LIMIT ?"
 				)
 		) {
@@ -150,16 +203,17 @@ public final class Categories {
 		category.setName(resultSet.getString("name"));
 		category.setDescription(resultSet.getString("description"));
 		category.setAvailable(resultSet.getBoolean("isAvailable"));
+		category.setHidden(resultSet.getBoolean("isHidden"));
 		category.setCreatedAt(resultSet.getTimestamp("createdAt"));
 		category.setUpdatedAt(resultSet.getTimestamp("updatedAt"));
 		return category;
 	}
 
 	private static @NotNull List<@NotNull Category2> createMany(@NotNull ResultSet resultSet) throws SQLException {
-		final List<Category2> bills = new ArrayList<>();
+		final List<Category2> categories = new ArrayList<>();
 		while (resultSet.next()) {
-			bills.add(createOne(resultSet));
+			categories.add(createOne(resultSet));
 		}
-		return bills;
+		return categories;
 	}
 }
