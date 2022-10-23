@@ -69,14 +69,15 @@ CREATE TABLE `bills`
 
 CREATE TABLE `items`
 (
-    `billId`     INT       NOT NULL,
-    `productId`  INT       NOT NULL,
-    `quantity`   INT       NOT NULL,
-    `notes`      TEXT,
-    `price`      INT       NOT NULL, -- price của mỗi item là giá hiện tại của sản phẩm, trừ trường hợp giá của sản phẩm bị thay đổi mà cần truy vết hoá đơn
-    `createdAt`  TIMESTAMP NOT NULL DEFAULT now(),
-    `updatedAt`  TIMESTAMP NOT NULL DEFAULT now(),
-    PRIMARY KEY (`billId`, `productId`),
+    `id`        INT       NOT NULL AUTO_INCREMENT,
+    `billId`    INT       NOT NULL,
+    `productId` INT       NOT NULL,
+    `quantity`  INT       NOT NULL,
+    `notes`     TEXT,
+    `price`     INT       NOT NULL, -- price của mỗi item là giá hiện tại của sản phẩm, trừ trường hợp giá của sản phẩm bị thay đổi mà cần truy vết hoá đơn
+    `createdAt` TIMESTAMP NOT NULL DEFAULT now(),
+    `updatedAt` TIMESTAMP NOT NULL DEFAULT now(),
+    PRIMARY KEY (`id`),
     FOREIGN KEY (`billId`) REFERENCES `bills` (`id`),
     FOREIGN KEY (`productId`) REFERENCES `products` (`id`)
 );
