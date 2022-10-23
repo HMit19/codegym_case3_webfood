@@ -122,7 +122,8 @@ public final class Bills {
 		try (
 				final Connection connection = DatabaseManagement.createConnection();
 				final PreparedStatement statement = connection.prepareStatement(
-						"SELECT `id`, `userId`, `notes`, `isActive`, `createdAt`, `updatedAt` FROM `bills` WHERE `userId` = ? LIMIT ?"
+						"SELECT `id`, `userId`, `notes`, `isActive`, `createdAt`, `updatedAt`"
+								+ " FROM `bills` WHERE `userId` = ? LIMIT ?"
 				)
 		) {
 			// set values for statement
@@ -135,6 +136,57 @@ public final class Bills {
 			}
 		} catch (final SQLException exception) {
 			LOGGER.error("Cannot find this Bill: Exception on execute!", exception);
+			return List.of();
+		}
+	}
+
+	public static @NotNull List<@NotNull Bill2> findActiveByUserId(int id) {
+		return findActiveByUserId(id, DatabaseManagement.DEFAULT_LIMIT);
+	}
+
+	public static @NotNull List<@NotNull Bill2> findActiveByUserId(int id, int limit) {
+		try (
+				final Connection connection = DatabaseManagement.createConnection();
+				final PreparedStatement statement = connection.prepareStatement(
+						"SELECT `id`, `userId`, `notes`, `isActive`, `createdAt`, `updatedAt`"
+								+ " FROM `bills` WHERE `isActive` = TRUE AND `userId` = ? LIMIT ?"
+				)
+		) {
+			// set values for statement
+			statement.setInt(1, id);
+			statement.setInt(2, limit);
+			LOGGER.info("Executing SQL statement: " + statement);
+			try (final ResultSet resultSet = statement.executeQuery()) {
+				// create return values
+				return createMany(resultSet);
+			}
+		} catch (final SQLException exception) {
+			LOGGER.error("Cannot find this Bill: Exception on execute!", exception);
+			return List.of();
+		}
+	}
+
+	public static @NotNull List<@NotNull Bill2> getActive() {
+		return getActive(DatabaseManagement.DEFAULT_LIMIT);
+	}
+
+	public static @NotNull List<@NotNull Bill2> getActive(int limit) {
+		try (
+				final Connection connection = DatabaseManagement.createConnection();
+				final PreparedStatement statement = connection.prepareStatement(
+						"SELECT `id`, `userId`, `notes`, `isActive`, `createdAt`, `updatedAt`"
+								+ " FROM `bills`  WHERE `isActive` = TRUE LIMIT ?"
+				)
+		) {
+			// set values for statement
+			statement.setInt(1, limit);
+			LOGGER.info("Executing SQL statement: " + statement);
+			try (final ResultSet resultSet = statement.executeQuery()) {
+				// create return values
+				return createMany(resultSet);
+			}
+		} catch (final SQLException exception) {
+			LOGGER.error("Cannot get Bill list: Exception on execute!", exception);
 			return List.of();
 		}
 	}
