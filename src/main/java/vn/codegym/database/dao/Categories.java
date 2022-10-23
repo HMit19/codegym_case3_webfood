@@ -63,8 +63,8 @@ public final class Categories {
 		try (
 				final Connection connection = DatabaseManagement.createConnection();
 				final PreparedStatement statement = connection.prepareStatement(
-						"UPDATE 'categories' SET `name` = ?, `description` = ?, `isAvailable` = ?, `isHidden` = ?"
-								+ "`updatedAt` = DEFAULT WHERE `id` = ?"
+						"UPDATE 'categories' SET `name` = ?, `description` = ?, `isAvailable` = ?, `isHidden` = ?,"
+								+ " `updatedAt` = DEFAULT WHERE `id` = ?"
 				)
 		) {
 			// get data from POJO and check null

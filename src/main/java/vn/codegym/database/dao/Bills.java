@@ -114,11 +114,11 @@ public final class Bills {
 		}
 	}
 
-	public static @NotNull List<@NotNull Bill2> findByUserId(int id) {
-		return findByUserId(id, DatabaseManagement.DEFAULT_LIMIT);
+	public static @NotNull List<@NotNull Bill2> findByUserId(int userId) {
+		return findByUserId(userId, DatabaseManagement.DEFAULT_LIMIT);
 	}
 
-	public static @NotNull List<@NotNull Bill2> findByUserId(int id, int limit) {
+	public static @NotNull List<@NotNull Bill2> findByUserId(int userId, int limit) {
 		try (
 				final Connection connection = DatabaseManagement.createConnection();
 				final PreparedStatement statement = connection.prepareStatement(
@@ -127,7 +127,7 @@ public final class Bills {
 				)
 		) {
 			// set values for statement
-			statement.setInt(1, id);
+			statement.setInt(1, userId);
 			statement.setInt(2, limit);
 			LOGGER.info("Executing SQL statement: " + statement);
 			try (final ResultSet resultSet = statement.executeQuery()) {
@@ -140,11 +140,11 @@ public final class Bills {
 		}
 	}
 
-	public static @NotNull List<@NotNull Bill2> findActiveByUserId(int id) {
-		return findActiveByUserId(id, DatabaseManagement.DEFAULT_LIMIT);
+	public static @NotNull List<@NotNull Bill2> findActiveByUserId(int userId) {
+		return findActiveByUserId(userId, DatabaseManagement.DEFAULT_LIMIT);
 	}
 
-	public static @NotNull List<@NotNull Bill2> findActiveByUserId(int id, int limit) {
+	public static @NotNull List<@NotNull Bill2> findActiveByUserId(int userId, int limit) {
 		try (
 				final Connection connection = DatabaseManagement.createConnection();
 				final PreparedStatement statement = connection.prepareStatement(
@@ -153,7 +153,7 @@ public final class Bills {
 				)
 		) {
 			// set values for statement
-			statement.setInt(1, id);
+			statement.setInt(1, userId);
 			statement.setInt(2, limit);
 			LOGGER.info("Executing SQL statement: " + statement);
 			try (final ResultSet resultSet = statement.executeQuery()) {
