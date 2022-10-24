@@ -1,42 +1,38 @@
 plugins {
-    id 'idea'
-    id 'java'
-    id 'war'
+	id 'idea'
+	id 'java'
+	id 'war'
 }
 
 idea {
-    module {
-        downloadSources = true
-    }
+	module {
+		downloadSources = true
+	}
 }
 
 group 'vn.codegym'
 version '1.0-SNAPSHOT'
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
-ext {
-    junitVersion = '5.8.2'
+java {
+	sourceCompatibility = '11'
+	targetCompatibility = '11'
 }
-
-sourceCompatibility = '11'
-targetCompatibility = '11'
 
 tasks.withType(JavaCompile) {
-    options.warnings = true
-    options.encoding = 'UTF-8'
-    options.compilerArgs += '-Xlint'
+	options.warnings = true
+	options.encoding = 'UTF-8'
+	options.compilerArgs += '-Xlint'
 }
 
 dependencies {
-    compileOnly group: 'org.jetbrains', name: 'annotations', version: '23.0.0'
-    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
-    implementation group: 'javax.servlet', name: 'jstl', version: '1.2'
-    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.23'
-}
-
-test {
-    useJUnitPlatform()
+	compileOnly group: 'org.jetbrains', name: 'annotations', version: '23.0.0'
+	compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+	implementation group: 'javax.servlet', name: 'jstl', version: '1.2'
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.23'
+	implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.3'
+	implementation group: 'org.slf4j', name: 'slf4j-simple', version: '2.0.3'
 }

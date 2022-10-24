@@ -7,9 +7,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public final class DatabaseManagement {
-	private static final @NotNull String JDBC_URL = "jdbc:mysql://localhost:3306/webfood";
+	private static final @NotNull String JDBC_URL = "jdbc:mysql://localhost:3306/web_food";
 	private static final @NotNull String JDBC_USERNAME = "root";
-	private static final @NotNull String JDBC_PASSWORD = "1905";
+	private static final @NotNull String JDBC_PASSWORD = "password";
+
+	public static final int DEFAULT_LIMIT = 50;
 
 	private DatabaseManagement() {
 	}
